@@ -1,0 +1,43 @@
+field.widget.settings.boostrap_layout_classes_widget:
+  type: mapping
+  label: 'Boostrap Layout Classes widget settings'
+  mapping:
+    usage:
+      type: integer
+      label: 'Usage'
+    wrapper:
+      type: integer
+      label: 'Wrapper'
+    container:
+      type: boolean
+      label: 'Container'
+    col:
+      type: boolean
+      label: 'Columns'
+    offset:
+      type: boolean
+      label: 'Offset'
+    order:
+      type: boolean
+      label: 'Order'
+    margin:
+      type: boolean
+      label: 'Margin'
+    padding:
+      type: boolean
+      label: 'Padding'
+    gutter:
+      type: boolean
+      label: 'Gutters'
+    align-items:
+      type: boolean
+      label: 'Align Items'
+    align-self:
+      type: boolean
+      label: 'Align Self'
+    justify-content:
+      type: boolean
+      label: 'Justify Content'
+    custom:
+      type: boolean
+      label: 'Custom Classes'
