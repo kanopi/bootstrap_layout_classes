@@ -5,11 +5,33 @@
  * Entity Class Formatter module.
  */
 
+use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Field\FieldItemListInterface;
+
+/**
+ * Implements hook_help().
+ */
+function boostrap_layout_classes_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.boostrap_layout_classes':
+      $output = '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Provides functionality for editing and rendering Bootstrap layout classes.
+      Uses a plain text field to store bootstrap layout classes (container, row, col, margin, padding, gutter, offset, order, align, justify).') . '</p>';
+      $output .= '<h3>' . t('Configuration') . '</h3>';
+      $output .= '<h5>' . t('Field') . '</h5>';
+      $output .= '<p>' . t('On the desired content or paragraph type create a plain text field (cardinality of limited 1), e.g. <b>field_layout</b>.') . '</p>';
+      $output .= '<h5>' . t('Widget') . '</h5>';
+      $output .= '<p>' . t('Set the form display to "Boostrap Layout Classes" and use the options to choose which layout classes to allow.') . '</p>';
+      $output .= '<h5>' . t('Formatter') . '</h5>';
+      $output .= '<p>' . t('Set the display to a hidden label and "Boostrap Layout Classes" formatter.') . '</p>';
+      
+      return $output;
+  }
+}
 
 /**
  * Implements hook_entity_view_alter().
