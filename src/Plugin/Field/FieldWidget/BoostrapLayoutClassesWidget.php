@@ -1,12 +1,5 @@
 <?php
 
-/**
- * @file
- * Definition of Drupal\boostrap_layout_classes\Plugin\Field\FieldFormatter\BoostrapLayoutClassesWidget.
- *
- * @see https://www.drupal.org/docs/8/creating-custom-modules/create-a-custom-field-formatter
- */
-
 namespace Drupal\boostrap_layout_classes\Plugin\Field\FieldWidget;
 
 use Drupal\Core\Field\FieldItemListInterface;
@@ -49,16 +42,31 @@ class BoostrapLayoutClassesWidget extends WidgetBase {
     ] + parent::defaultSettings();
   }
 
-  static $settings_options_usage = [
+  /**
+   * Supported Usage settings.
+   *
+   * @var string
+   */
+  protected static $settingsOptionsUsage = [
     0 => 'Container',
     1 => 'Row',
     2 => 'Column',
   ];
-  static $settings_options_wrapper = [
+  /**
+   * Supported Wrapper settings.
+   *
+   * @var string
+   */
+  protected static $settingsOptionsWrapper = [
     0 => 'Fieldset',
     1 => 'Details',
   ];
-  static $settings_options = [
+  /**
+   * Supported Options settings.
+   *
+   * @var string
+   */
+  protected static $settingsOptions = [
     'container' => 'Container',
     'col' => 'Columns',
     'offset' => 'Offset',
@@ -79,20 +87,21 @@ class BoostrapLayoutClassesWidget extends WidgetBase {
     $element['usage'] = [
       '#type' => 'select',
       '#title' => $this->t('Classes for'),
-      '#options' => self::$settings_options_usage,
+      '#options' => self::$settingsOptionsUsage,
       '#default_value' => $this->getSetting('usage'),
     ];
     $element['wrapper'] = [
       '#type' => 'select',
       '#title' => $this->t('Display as'),
-      '#options' => self::$settings_options_wrapper,
+      '#options' => self::$settingsOptionsWrapper,
       '#default_value' => $this->getSetting('wrapper'),
     ];
 
-    foreach (self::$settings_options as $option => $title) {
+    foreach (self::$settingsOptions as $option => $title) {
+      $label = 'Select ' . $title;
       $element[$option] = [
         '#type' => 'checkbox',
-        '#title' => $this->t('Select ' . $title),
+        '#title' => $this->t($label),
         '#default_value' => $this->getSetting($option),
       ];
     }
@@ -105,16 +114,16 @@ class BoostrapLayoutClassesWidget extends WidgetBase {
    */
   public function settingsSummary() {
     $enabled = [];
-    foreach (self::$settings_options as $option => $title) {
+    foreach (self::$settingsOptions as $option => $title) {
       if ($this->getSetting($option)) {
         $enabled[] = $title;
       }
     }
 
     $summary = [];
-    $summary[] = $this->t('Options for') . ' ' . self::$settings_options_usage[$this->getSetting('usage')];
-    $summary[] = $this->t('Display as') . ' ' . self::$settings_options_wrapper[$this->getSetting('wrapper')];
-    $summary[] = $this->t('Classes') . ': ' . implode(' + ', $enabled);
+    $summary[] = $this->t('Options for %usage', ['%usage' => self::$settingsOptionsUsage[$this->getSetting('usage')]]);
+    $summary[] = $this->t('Display as %wrapper', ['%wrapper' => self::$settingsOptionsWrapper[$this->getSetting('wrapper')]]);
+    $summary[] = $this->t('Classes: %enabled', ['%enabled' => implode(' + ', $enabled)]);
     return $summary;
   }
 
@@ -211,16 +220,16 @@ class BoostrapLayoutClassesWidget extends WidgetBase {
       '-xl' => '≥ 1200px',
     ];
     $selects = [];
-    if ($this->getSetting('col')
-        || self::hasAny($values, ['col', 'col-sm', 'col-md', 'col-lg', 'col-xl'])) {
+    if ($this->getSetting('col') || self::hasAny($values,
+        ['col', 'col-sm', 'col-md', 'col-lg', 'col-xl'])) {
       $selects['col'] = [$this->t('Columns'), $options_width];
     }
-    if ($this->getSetting('offset')
-        || self::hasAny($values, ['offset', 'offset-sm', 'offset-md', 'offset-lg', 'offset-xl'])) {
+    if ($this->getSetting('offset') || self::hasAny($values,
+        ['offset', 'offset-sm', 'offset-md', 'offset-lg', 'offset-xl'])) {
       $selects['offset'] = [$this->t('Offset'), $options_offset];
     }
-    if ($this->getSetting('order')
-        || self::hasAny($values, ['order', 'order-sm', 'order-md', 'order-lg', 'order-xl'])) {
+    if ($this->getSetting('order') || self::hasAny($values,
+        ['order', 'order-sm', 'order-md', 'order-lg', 'order-xl'])) {
       $selects['order'] = [$this->t('Order'), $options_order];
     }
 
@@ -253,39 +262,42 @@ class BoostrapLayoutClassesWidget extends WidgetBase {
       }
     }
 
-    if ($this->getSetting('margin') || self::hasAny($values, ['mt', 'ml', 'mr', 'mb'])) {
+    if ($this->getSetting('margin') || self::hasAny($values,
+        ['mt', 'ml', 'mr', 'mb'])) {
       $element['margin'] = [
         '#type' => 'fieldset',
         '#title' => $this->t('Outer'),
         '#attributes' => ['class' => ['container-inline', 'dpad']],
       ];
+      // Consider maybe shorter labels of "↓)", "→)", "←)", "↑)".
       $element['margin']['mt'] = [
         '#type' => 'select',
-        '#title' => $this->t('Top'), // Maybe "↓)".
+        '#title' => $this->t('Top'),
         '#options' => $options_spacing,
         '#default_value' => $values['mt'],
       ];
       $element['margin']['ml'] = [
         '#type' => 'select',
-        '#title' => $this->t('Left'), // Maybe "→)".
+        '#title' => $this->t('Left'),
         '#options' => $options_spacing,
         '#default_value' => $values['ml'],
       ];
       $element['margin']['mr'] = [
         '#type' => 'select',
-        '#title' => $this->t('Right'), // Maybe "←)".
+        '#title' => $this->t('Right'),
         '#options' => $options_spacing,
         '#default_value' => $values['mr'],
       ];
       $element['margin']['mb'] = [
         '#type' => 'select',
-        '#title' => $this->t('Bottom'), // Maybe "↑)".
+        '#title' => $this->t('Bottom'),
         '#options' => $options_spacing,
         '#default_value' => $values['mb'],
       ];
     }
 
-    if ($this->getSetting('padding') || self::hasAny($values, ['pt', 'pl', 'pr', 'pb'])) {
+    if ($this->getSetting('padding') || self::hasAny($values,
+        ['pt', 'pl', 'pr', 'pb'])) {
       $element['padding'] = [
         '#type' => 'fieldset',
         '#title' => $this->t('Inner'),
@@ -323,7 +335,10 @@ class BoostrapLayoutClassesWidget extends WidgetBase {
         || $this->getSetting('justify-content')
         || $this->getSetting('gutter')
         || $this->getSetting('custom')
-        || self::hasAny($values, ['container', 'align-items', 'align-self', 'justify-content', 'gx', 'custom'])) {
+        || self::hasAny($values, [
+          'container', 'align-items', 'align-self',
+          'justify-content', 'gx', 'custom',
+        ])) {
       $element['general'] = [
         '#type' => 'fieldset',
         '#title' => $this->t('General'),
@@ -384,7 +399,7 @@ class BoostrapLayoutClassesWidget extends WidgetBase {
       '#attributes' => ['class' => ['boostrap_layout_classes_widget']],
       '#attached' => ['library' => ['boostrap_layout_classes/form_style']],
     ];
-    //return ['value' => $element];
+    // Should this be return ['value' => $element];?
     return $element;
   }
 
@@ -473,7 +488,7 @@ class BoostrapLayoutClassesWidget extends WidgetBase {
   /**
    * Check if array has non-empty value for at least one given key.
    */
-  static function hasAny($array, $keys) {
+  protected static function hasAny($array, $keys) {
     foreach ($keys as $key) {
       if (isset($array[$key]) && $array[$key] != '') {
         return TRUE;
@@ -485,7 +500,7 @@ class BoostrapLayoutClassesWidget extends WidgetBase {
   /**
    * Default key/value pairs.
    */
-  static function defaultItems() {
+  protected static function defaultItems() {
     return [
       'container' => '',
       'col' => '',
@@ -521,7 +536,7 @@ class BoostrapLayoutClassesWidget extends WidgetBase {
   /**
    * Split text into layout key/values.
    */
-  static function split($value) {
+  protected static function split($value) {
     // Defaults.
     $items = self::defaultItems();
     $custom = [];

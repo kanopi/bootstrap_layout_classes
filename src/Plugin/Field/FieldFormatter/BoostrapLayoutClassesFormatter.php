@@ -1,12 +1,5 @@
 <?php
 
-/**
- * @file
- * Definition of Drupal\boostrap_layout_classes\Plugin\Field\FieldFormatter\BoostrapLayoutClassesFormatter.
- *
- * @see https://www.drupal.org/docs/8/creating-custom-modules/create-a-custom-field-formatter
- */
-
 namespace Drupal\boostrap_layout_classes\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Field\FieldItemListInterface;
@@ -49,11 +42,9 @@ class BoostrapLayoutClassesFormatter extends FormatterBase {
     $element['#css_target'] = 'node';
     $element['#css_depth'] = '1';
 
-    return $element;
-
     // Instead of outputting the value on the page
     // we are inserting it as a class into the markup.
-    return [];
+    return $element;
   }
 
 }
