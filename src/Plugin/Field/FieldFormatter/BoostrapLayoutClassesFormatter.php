@@ -41,10 +41,10 @@ class BoostrapLayoutClassesFormatter extends FormatterBase {
       // dpm(get_class($item));
       // dpm($item->getString());
       // dpm($item->getValue());
-      $classArray[] = str_replace('_','-', $item->getString());
+      $classArray[] = str_replace('_', '-', $item->getString());
     }
 
-    //$element['#css_class_source'] = $classArraySource;
+    // $element['#css_class_source'] = $classArraySource;
     $element['#css_class'] = $classArray;
     $element['#css_target'] = 'node';
     $element['#css_depth'] = '1';
@@ -55,4 +55,5 @@ class BoostrapLayoutClassesFormatter extends FormatterBase {
     // we are inserting it as a class into the markup.
     return [];
   }
+
 }

@@ -46,7 +46,7 @@
   padding: calc(0.25rem - 1px) calc(0.5rem - 1px);
 }
 .boostrap_layout_classes_widget .form-element--type-select {
-    padding-right: calc(2rem - 1px);
+  padding-right: calc(2rem - 1px);
 }
 .boostrap_layout_classes_widget tr .form-item {
   margin: 0;

@@ -50,27 +50,27 @@ class BoostrapLayoutClassesWidget extends WidgetBase {
   }
 
   static $settings_options_usage = [
-      0 => 'Container',
-      1 => 'Row',
-      2 => 'Column',
-    ];
+    0 => 'Container',
+    1 => 'Row',
+    2 => 'Column',
+  ];
   static $settings_options_wrapper = [
-      0 => 'Fieldset',
-      1 => 'Details',
-    ];
+    0 => 'Fieldset',
+    1 => 'Details',
+  ];
   static $settings_options = [
-      'container' => 'Container',
-      'col' => 'Columns',
-      'offset' => 'Offset',
-      'order' => 'Order',
-      'margin' => 'Margin',
-      'padding' => 'Padding',
-      'gutter' => 'Gutters',
-      'align-items' => 'Align Items',
-      'align-self' => 'Align Self',
-      'justify-content' => 'Justify Content',
-      'custom' => 'Custom Classes',
-    ];
+    'container' => 'Container',
+    'col' => 'Columns',
+    'offset' => 'Offset',
+    'order' => 'Order',
+    'margin' => 'Margin',
+    'padding' => 'Padding',
+    'gutter' => 'Gutters',
+    'align-items' => 'Align Items',
+    'align-self' => 'Align Self',
+    'justify-content' => 'Justify Content',
+    'custom' => 'Custom Classes',
+  ];
 
   /**
    * {@inheritdoc}
@@ -106,7 +106,9 @@ class BoostrapLayoutClassesWidget extends WidgetBase {
   public function settingsSummary() {
     $enabled = [];
     foreach (self::$settings_options as $option => $title) {
-      if ($this->getSetting($option)) $enabled[] = $title;
+      if ($this->getSetting($option)) {
+        $enabled[] = $title;
+      }
     }
 
     $summary = [];
@@ -120,7 +122,7 @@ class BoostrapLayoutClassesWidget extends WidgetBase {
    * {@inheritdoc}
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
-    $value = isset($items[$delta]->value) ? $items[$delta]->value : '';
+    $value = $items[$delta]->value ?? '';
     $values = self::split($value);
 
     $options_container = [
@@ -133,8 +135,7 @@ class BoostrapLayoutClassesWidget extends WidgetBase {
       // 'container-xxl' => 'X-Large',
       'container-fluid' => 'Fluid',
     ];
-    //      '#empty_option' => '--',
-
+    // '#empty_option' => '--',
     $options_width = [
       '' => '←',
       '1' => '8%',
@@ -211,22 +212,22 @@ class BoostrapLayoutClassesWidget extends WidgetBase {
     ];
     $selects = [];
     if ($this->getSetting('col')
-        || self::hasAny($values, ['col','col-sm','col-md','col-lg','col-xl'])) {
+        || self::hasAny($values, ['col', 'col-sm', 'col-md', 'col-lg', 'col-xl'])) {
       $selects['col'] = [$this->t('Columns'), $options_width];
     }
     if ($this->getSetting('offset')
-        || self::hasAny($values, ['offset','offset-sm','offset-md','offset-lg','offset-xl'])) {
+        || self::hasAny($values, ['offset', 'offset-sm', 'offset-md', 'offset-lg', 'offset-xl'])) {
       $selects['offset'] = [$this->t('Offset'), $options_offset];
     }
     if ($this->getSetting('order')
-        || self::hasAny($values, ['order','order-sm','order-md','order-lg','order-xl'])) {
+        || self::hasAny($values, ['order', 'order-sm', 'order-md', 'order-lg', 'order-xl'])) {
       $selects['order'] = [$this->t('Order'), $options_order];
     }
 
     if (!empty($selects)) {
       $element['layout'] = [
         '#type' => 'table',
-        //'#caption' => t('Layout Options'),
+        // '#caption' => t('Layout Options'),
         '#header' => [
           $this->t('Option'),
           $this->t('Standard'),
@@ -237,7 +238,7 @@ class BoostrapLayoutClassesWidget extends WidgetBase {
         ],
       ];
     }
-    foreach ($selects as $select => list($select_name, $select_options)) {
+    foreach ($selects as $select => [$select_name, $select_options]) {
       $element['layout'][$select]['name'] = [
         '#plain_text' => $select_name,
       ];
@@ -252,7 +253,7 @@ class BoostrapLayoutClassesWidget extends WidgetBase {
       }
     }
 
-    if ($this->getSetting('margin') || self::hasAny($values, ['mt','ml','mr','mb'])) {
+    if ($this->getSetting('margin') || self::hasAny($values, ['mt', 'ml', 'mr', 'mb'])) {
       $element['margin'] = [
         '#type' => 'fieldset',
         '#title' => $this->t('Outer'),
@@ -260,31 +261,31 @@ class BoostrapLayoutClassesWidget extends WidgetBase {
       ];
       $element['margin']['mt'] = [
         '#type' => 'select',
-        '#title' => $this->t('Top'), // "↓)"
+        '#title' => $this->t('Top'), // Maybe "↓)".
         '#options' => $options_spacing,
         '#default_value' => $values['mt'],
       ];
       $element['margin']['ml'] = [
         '#type' => 'select',
-        '#title' => $this->t('Left'), // "→)"
+        '#title' => $this->t('Left'), // Maybe "→)".
         '#options' => $options_spacing,
         '#default_value' => $values['ml'],
       ];
       $element['margin']['mr'] = [
         '#type' => 'select',
-        '#title' => $this->t('Right'), // "←)"
+        '#title' => $this->t('Right'), // Maybe "←)".
         '#options' => $options_spacing,
         '#default_value' => $values['mr'],
       ];
       $element['margin']['mb'] = [
         '#type' => 'select',
-        '#title' => $this->t('Bottom'), // "↑)"
+        '#title' => $this->t('Bottom'), // Maybe "↑)".
         '#options' => $options_spacing,
         '#default_value' => $values['mb'],
       ];
     }
 
-    if ($this->getSetting('padding') || self::hasAny($values, ['pt','pl','pr','pb'])) {
+    if ($this->getSetting('padding') || self::hasAny($values, ['pt', 'pl', 'pr', 'pb'])) {
       $element['padding'] = [
         '#type' => 'fieldset',
         '#title' => $this->t('Inner'),
@@ -322,7 +323,7 @@ class BoostrapLayoutClassesWidget extends WidgetBase {
         || $this->getSetting('justify-content')
         || $this->getSetting('gutter')
         || $this->getSetting('custom')
-        || self::hasAny($values, ['container','align-items','align-self','justify-content','gx','custom'])) {
+        || self::hasAny($values, ['container', 'align-items', 'align-self', 'justify-content', 'gx', 'custom'])) {
       $element['general'] = [
         '#type' => 'fieldset',
         '#title' => $this->t('General'),
@@ -392,7 +393,7 @@ class BoostrapLayoutClassesWidget extends WidgetBase {
    */
   public function massageFormValues(array $values, array $form, FormStateInterface $form_state) {
     foreach ($values as &$value) {
-      // get nested items
+      // Get nested items.
       $items = array_merge(self::defaultItems(),
         $value['layout']['col'] ?? [],
         $value['layout']['offset'] ?? [],
@@ -401,7 +402,7 @@ class BoostrapLayoutClassesWidget extends WidgetBase {
         $value['padding'] ?? [],
         $value['general'] ?? []);
 
-      // special handling of *x and *y
+      // Special handling of *x and *y.
       if ($items['mt'] == $items['mb']) {
         $items['my'] = $items['mt'];
         $items['mt'] = '';
@@ -422,7 +423,7 @@ class BoostrapLayoutClassesWidget extends WidgetBase {
         $items['pl'] = '';
         $items['pr'] = '';
       }
-      // compress duplicate col, offset, order
+      // Compress duplicate col, offset, order.
       $prefixes = ['col', 'offset', 'order'];
       $suffixes = ['', '-sm', '-md', '-lg', '-xl'];
       foreach ($prefixes as $prefix) {
@@ -430,20 +431,22 @@ class BoostrapLayoutClassesWidget extends WidgetBase {
         foreach ($suffixes as $suffix) {
           if ($items[$prefix . $suffix] == $prev) {
             $items[$prefix . $suffix] = '';
-          } elseif (!empty($items[$prefix . $suffix])) {
+          }
+          elseif (!empty($items[$prefix . $suffix])) {
             $prev = $items[$prefix . $suffix];
           }
         }
       }
-      // collect
+      // Collect.
       $text = [];
       foreach ($items as $key => $item) {
-        // special handling of container and custom classes
+        // Special handling of container and custom classes.
         if ($key == 'container' || $key == 'custom') {
           if ($item != '') {
             $text[] = $item;
           }
-        } else if ($item != '') {
+        }
+        elseif ($item != '') {
           $text[] = $key . '-' . $item;
         }
       }
@@ -473,10 +476,10 @@ class BoostrapLayoutClassesWidget extends WidgetBase {
   static function hasAny($array, $keys) {
     foreach ($keys as $key) {
       if (isset($array[$key]) && $array[$key] != '') {
-        return true;
+        return TRUE;
       }
     }
-    return false;
+    return FALSE;
   }
 
   /**
@@ -519,7 +522,7 @@ class BoostrapLayoutClassesWidget extends WidgetBase {
    * Split text into layout key/values.
    */
   static function split($value) {
-    // defaults
+    // Defaults.
     $items = self::defaultItems();
     $custom = [];
     if (isset($value) && !empty($value)) {
@@ -527,31 +530,40 @@ class BoostrapLayoutClassesWidget extends WidgetBase {
       foreach ($classes as $class) {
         $key = $class;
         $val = '';
-        // split class into key-val if possible
+        // Split class into key-val if possible.
         $lastdash = strrpos($class, '-');
         if ($lastdash) {
           $key = substr($class, 0, $lastdash);
           $val = substr($class, $lastdash + 1);
         }
-        // special handling of *x and *y
+        // Special handling of *x and *y.
         if ($key == 'mx') {
           $items['ml'] = $val;
           $items['mr'] = $val;
-        } elseif ($key == 'my') {
+        }
+        elseif ($key == 'my') {
           $items['mt'] = $val;
           $items['mb'] = $val;
-        } elseif ($key == 'px') {
+        }
+        elseif ($key == 'px') {
           $items['pl'] = $val;
           $items['pr'] = $val;
-        } elseif ($key == 'py') {
+        }
+        elseif ($key == 'py') {
           $items['pt'] = $val;
           $items['pb'] = $val;
-        } elseif ($key == 'container') {
-          $items['container'] = $class; // store the class
-        } elseif (isset($items[$key])) {
-          $items[$key] = $val; // store only the value
-        } else {
-          $custom[] = $class; // custom classes with dash
+        }
+        elseif ($key == 'container') {
+          // Store the class.
+          $items['container'] = $class;
+        }
+        elseif (isset($items[$key])) {
+          // Store only the value.
+          $items[$key] = $val;
+        }
+        else {
+          // Custom classes with dash.
+          $custom[] = $class;
         }
       }
     }
