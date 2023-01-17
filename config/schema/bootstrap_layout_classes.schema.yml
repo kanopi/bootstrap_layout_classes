@@ -1,6 +1,6 @@
-field.widget.settings.boostrap_layout_classes_widget:
+field.widget.settings.bootstrap_layout_classes_widget:
   type: mapping
-  label: 'Boostrap Layout Classes widget settings'
+  label: 'Bootstrap Layout Classes widget settings'
   mapping:
     usage:
       type: integer

@@ -1,17 +1,17 @@
 <?php
 
-namespace Drupal\boostrap_layout_classes\Plugin\Field\FieldWidget;
+namespace Drupal\bootstrap_layout_classes\Plugin\Field\FieldWidget;
 
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Plugin implementation of the 'boostrap_layout_classes_widget' widget.
+ * Plugin implementation of the 'bootstrap_layout_classes_widget' widget.
  *
  * @FieldWidget(
- *   id = "boostrap_layout_classes_widget",
- *   module = "boostrap_layout_classes",
+ *   id = "bootstrap_layout_classes_widget",
+ *   module = "bootstrap_layout_classes",
  *   label = @Translation("Bootstrap Layout Classes"),
  *   field_types = {
  *     "string",
@@ -19,7 +19,7 @@ use Drupal\Core\Form\FormStateInterface;
  *   }
  * )
  */
-class BoostrapLayoutClassesWidget extends WidgetBase {
+class BootstrapLayoutClassesWidget extends WidgetBase {
 
   /**
    * {@inheritdoc}
@@ -396,8 +396,8 @@ class BoostrapLayoutClassesWidget extends WidgetBase {
 
     $element += [
       '#type' => $this->getSetting('wrapper') ? 'details' : 'fieldset',
-      '#attributes' => ['class' => ['boostrap_layout_classes_widget']],
-      '#attached' => ['library' => ['boostrap_layout_classes/form_style']],
+      '#attributes' => ['class' => ['bootstrap_layout_classes_widget']],
+      '#attached' => ['library' => ['bootstrap_layout_classes/form_style']],
     ];
     // Should this be return ['value' => $element];?
     return $element;

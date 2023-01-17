@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\boostrap_layout_classes\Plugin\Field\FieldFormatter;
+namespace Drupal\bootstrap_layout_classes\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
@@ -9,9 +9,9 @@ use Drupal\Core\Field\FormatterBase;
  * Plugin implementation of the 'country' formatter showing the iso code.
  *
  * @FieldFormatter(
- *   id = "boostrap_layout_classes_formatter",
- *   module = "boostrap_layout_classes",
- *   label = @Translation("Boostrap Layout Classes"),
+ *   id = "bootstrap_layout_classes_formatter",
+ *   module = "bootstrap_layout_classes",
+ *   label = @Translation("Bootstrap Layout Classes"),
  *   description = @Translation("add a value as a class"),
  *   field_types = {
  *     "string",
@@ -20,7 +20,7 @@ use Drupal\Core\Field\FormatterBase;
  *   }
  * )
  */
-class BoostrapLayoutClassesFormatter extends FormatterBase {
+class BootstrapLayoutClassesFormatter extends FormatterBase {
 
   /**
    * {@inheritdoc}

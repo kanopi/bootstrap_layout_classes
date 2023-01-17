@@ -1,14 +1,14 @@
-# Boostrap Layout Classes Widget
+# Bootstrap Layout Classes Widget
 
 Provides functionality for editing and rendering Bootstrap layout classes.
 
 Uses a plain text field to store bootstrap layout classes (container, row, col, margin, padding, gutter, offset, order, align, justify).
 
 For a full description of the module, visit the
-[project page](https://www.drupal.org/project/boostrap_layout_classes).
+[project page](https://www.drupal.org/project/bootstrap_layout_classes).
 
 Submit bug reports and feature suggestions, or track changes in the
-[issue queue](https://www.drupal.org/project/issues/boostrap_layout_classes).
+[issue queue](https://www.drupal.org/project/issues/bootstrap_layout_classes).
 
 
 ## Requirements
@@ -23,12 +23,12 @@ information, see
 [Installing Drupal Modules](https://www.drupal.org/docs/extending-drupal/installing-drupal-modules).
 
 
-## Composer
+### Composer
 
 If your site is [managed via Composer](https://www.drupal.org/node/2718229), use Composer to download the module:
 
 ```sh
-composer require "drupal/boostrap_layout_classes"
+composer require "drupal/bootstrap_layout_classes"
 ```
 
 
@@ -39,16 +39,16 @@ When the formatter is active for a field the module will prevent the text field 
 To get the normal field rendering back, select another formatter in the fields display settings and clear caches.
 
 
-## Field
+### Field
 
 On the desired content or paragraph type create a plain text field (cardinality of limited 1), e.g. `field_layout`.
 
 
-## Widget
+### Widget
 
-Set the form display to "Boostrap Layout Classes" and use the options to choose which layout classes to allow.
+Set the form display to "Bootstrap Layout Classes" and use the options to choose which layout classes to allow.
 
 
-## Formatter
+### Formatter
 
-Set the display to a hidden label and "Boostrap Layout Classes" formatter.
+Set the display to a hidden label and "Bootstrap Layout Classes" formatter.

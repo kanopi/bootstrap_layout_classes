@@ -1,5 +1,5 @@
-name: Boostrap Layout Classes
-description: 'Provides a Boostrap Layout Classes widget and field formatter.'
+name: Bootstrap Layout Classes
+description: 'Provides a Bootstrap Layout Classes widget and field formatter.'
 package: Fields
 
 type: module

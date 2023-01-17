@@ -1,9 +1,9 @@
 {
-  "name": "drupal/boostrap_layout_classes",
+  "name": "drupal/bootstrap_layout_classes",
   "type": "drupal-module",
-  "description": "Provides a Boostrap Layout Classes widget and field formatter.",
+  "description": "Provides a Bootstrap Layout Classes widget and field formatter.",
   "keywords": ["Drupal"],
-  "homepage": "http://drupal.org/project/boostrap_layout_classes",
+  "homepage": "http://drupal.org/project/bootstrap_layout_classes",
   "license": "GPL-2.0-or-later",
   "minimum-stability": "dev",
   "require": {
