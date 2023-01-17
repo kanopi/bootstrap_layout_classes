@@ -2,6 +2,8 @@
 
 Provides functionality for editing and rendering Bootstrap layout classes.
 
+Uses a plain text field to store bootstrap layout classes (container, row, col, margin, padding, gutter, offset, order, align, justify).
+
 For a full description of the module, visit the
 [project page](https://www.drupal.org/project/boostrap_layout_classes).
 
@@ -32,9 +34,9 @@ composer require "drupal/boostrap_layout_classes"
 
 ## Configuration
 
-The module has no menu or modifiable settings. There is no configuration. When
-enabled, the module will prevent the links from appearing. To get the links
-back, disable the module and clear caches.
+The module has no menu or modifiable settings. The widget can be configured in each fields display settings.
+When the formatter is active for a field the module will prevent the text field from being rendered and instead outputs the content as classes on the entity.
+To get the normal field rendering back, select another formatter in the fields display settings and clear caches.
 
 
 ## Field
