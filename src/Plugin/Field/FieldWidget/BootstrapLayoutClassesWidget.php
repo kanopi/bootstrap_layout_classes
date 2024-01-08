@@ -101,7 +101,7 @@ class BootstrapLayoutClassesWidget extends WidgetBase {
       $label = 'Select ' . $title;
       $element[$option] = [
         '#type' => 'checkbox',
-        '#title' => $this->t($label),
+        '#title' => $label,
         '#default_value' => $this->getSetting($option),
       ];
     }
