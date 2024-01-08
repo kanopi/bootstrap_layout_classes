@@ -1,0 +1,51 @@
+version: 2.1
+
+orbs:
+  ci-tools: kanopi/ci-tools@2
+
+workflows:
+  PHPstan:
+    jobs:
+      - ci-tools/composer:
+          tag: *CIMG_PHP_TAG
+          name: "PHPstan"
+          context: kanopi-code
+          command: 'phpstan'
+          save-output: true
+          post-to-github: true
+          post-artifact-to-github-when: on_fail
+          report-title: ":x: PHPstan test failed."
+          filters:
+            branches:
+              ignore:
+                - main
+  PHPcs:
+    jobs:
+      - ci-tools/composer:
+          tag: *CIMG_PHP_TAG
+          name: "PHPcs"
+          context: kanopi-code
+          command: 'phpcs'
+          save-output: true
+          post-to-github: true
+          post-artifact-to-github-when: on_fail
+          report-title: ":x: PHPcs test failed."
+          filters:
+            branches:
+              ignore:
+                - main
+  Rector:
+    jobs:
+      - ci-tools/composer:
+          tag: *CIMG_PHP_TAG
+          name: "Rector"
+          context: kanopi-code
+          command: 'rector-dryrun'
+          save-output: true
+          post-to-github: true
+          post-artifact-to-github-when: on_fail
+          report-title: ":x: Rector test failed."
+          filters:
+            branches:
+              ignore:
+                - main
