@@ -1,3 +1,5 @@
+CIMG_PHP_TAG: &CIMG_PHP_TAG "8.1.16"
+
 version: 2.1
 
 orbs:
