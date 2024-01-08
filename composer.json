@@ -1,14 +1,47 @@
 {
-  "name": "drupal/bootstrap_layout_classes",
-  "type": "drupal-module",
-  "description": "Provides a Bootstrap Layout Classes widget and field formatter.",
-  "keywords": ["Drupal"],
-  "homepage": "http://drupal.org/project/bootstrap_layout_classes",
-  "license": "GPL-2.0-or-later",
-  "minimum-stability": "dev",
-  "require": {
-    "drupal/core": "^8 || ^9 || ^10",
-    "symfony/yaml": "*",
-    "symfony/finder": "*"
-  }
+    "name": "kanopi/bootstrap_layout_classes",
+    "type": "drupal-module",
+    "description": "Provides a Bootstrap Layout Classes widget and field formatter.",
+    "keywords": ["Drupal"],
+    "homepage": "https://github.com/kanopi/bootstrap_layout_classes",
+    "license": "GPL-2.0-or-later",
+    "minimum-stability": "dev",
+    "require": { },
+    "require-dev": {
+        "dealerdirect/phpcodesniffer-composer-installer": "*",
+        "drupal/coder": "*",
+        "palantirnet/drupal-rector": "^0.18"
+    },
+    "scripts": {
+        "lint-php": "find / -not -path '*/vendors/*' -name '*.php' -exec php -l {} \\;",
+        "phpcs": "vendor/bin/phpcs --ignore=*/vendor/* --standard=Drupal,DrupalPractice --extensions=php,module,inc,install,test,profile,theme,info,txt,md,yml .",
+        "phpcbf": "vendor/bin/phpcbf --ignore=*/vendor/* --standard=Drupal,DrupalPractice --extensions=php,module,inc,install,test,profile,theme,info,txt,md,yml  ./bootstrap_layout_classes/",
+        "phpstan": [
+            "Composer\\Config::disableProcessTimeout",
+            "vendor/bin/phpstan analyse --memory-limit=-1 ."
+        ],
+        "rector-dryrun": [
+             "Composer\\Config::disableProcessTimeout",
+             "vendor/bin/rector process . --dry-run"
+         ],
+        "rector-fix": [
+             "Composer\\Config::disableProcessTimeout",
+             "vendor/bin/rector process ."
+         ],
+        "code-check": [
+            "@phpstan",
+            "@rector-dryrun",
+            "@phpcs"
+        ],
+        "code-fix": [
+            "@phpcbf",
+            "@rector-fix",
+            "@lint-php"
+        ]
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
 }
