@@ -28,7 +28,7 @@ function bootstrap_layout_classes_help($route_name, RouteMatchInterface $route_m
       $output .= '<p>' . t('Set the form display to "Bootstrap Layout Classes" and use the options to choose which layout classes to allow.') . '</p>';
       $output .= '<h5>' . t('Formatter') . '</h5>';
       $output .= '<p>' . t('Set the display to a hidden label and "Bootstrap Layout Classes" formatter.') . '</p>';
-      
+
       return $output;
   }
 }
