@@ -33,6 +33,7 @@ class BootstrapLayoutClassesWidget extends WidgetBase {
       'offset' => FALSE,
       'order' => FALSE,
       'margin' => TRUE,
+      'text' => FALSE,
       'padding' => TRUE,
       'gutter' => TRUE,
       'align-items' => FALSE,
@@ -72,6 +73,7 @@ class BootstrapLayoutClassesWidget extends WidgetBase {
     'offset' => 'Offset',
     'order' => 'Order',
     'margin' => 'Margin',
+    'text' => 'Background',
     'padding' => 'Padding',
     'gutter' => 'Gutters',
     'align-items' => 'Align Items',
@@ -101,7 +103,7 @@ class BootstrapLayoutClassesWidget extends WidgetBase {
       $label = 'Select ' . $title;
       $element[$option] = [
         '#type' => 'checkbox',
-        '#title' => $label,
+        '#title' => $this->t($label),
         '#default_value' => $this->getSetting($option),
       ];
     }
@@ -135,50 +137,30 @@ class BootstrapLayoutClassesWidget extends WidgetBase {
     $values = self::split($value);
 
     $options_container = [
-      '' => '-',
+      '' => '',
       'container' => 'Container',
-      // 'container-sm' => 'Small',
-      // 'container-md' => 'Medium',
-      // 'container-lg' => 'Large',
-      // 'container-xl' => 'X-Large',
-      // 'container-xxl' => 'X-Large',
       'container-fluid' => 'Fluid',
     ];
     // '#empty_option' => '--',
     $options_width = [
       '' => '←',
-      '1' => '8%',
-      '2' => '17%',
       '3' => '25%',
       '4' => '33%',
-      '5' => '42%',
       '6' => '50%',
-      '7' => '58%',
-      '8' => '67%',
       '9' => '75%',
-      '10' => '83%',
-      '11' => '92%',
       '12' => '100%',
     ];
-
     $options_offset = [
       '' => 'Auto',
-      '1' => '8%',
-      '2' => '17%',
       '3' => '25%',
       '4' => '33%',
-      '5' => '42%',
       '6' => '50%',
-      '7' => '58%',
-      '8' => '67%',
       '9' => '75%',
-      '10' => '83%',
-      '11' => '92%',
       '12' => '100%',
     ];
     $options_order = [
       '' => 'Auto',
-      'first' => 'Erstes',
+      'first' => 'First',
       '1' => '1',
       '2' => '2',
       '3' => '3',
@@ -212,17 +194,24 @@ class BootstrapLayoutClassesWidget extends WidgetBase {
       'end' => $this->t('End'),
     ];
 
+    $options_text = [
+      '' => $this->t(''),
+      '-bg-dark' => $this->t('Dark'),
+      '-bg-light' => $this->t('Light'),
+    ];
+
     $breakpoints = [
       '' => $this->t('Standard'),
-      '-sm' => '≥ 576px',
-      '-md' => '≥ 768px',
-      '-lg' => '≥ 992px',
-      '-xl' => '≥ 1200px',
+      '-sm' => 'Small',
+      '-md' => 'Medium',
+      '-lg' => 'Large',
+      '-xl' => 'Extra Large',
     ];
+
     $selects = [];
     if ($this->getSetting('col') || self::hasAny($values,
         ['col', 'col-sm', 'col-md', 'col-lg', 'col-xl'])) {
-      $selects['col'] = [$this->t('Columns'), $options_width];
+      $selects['col'] = [$this->t('Width'), $options_width];
     }
     if ($this->getSetting('offset') || self::hasAny($values,
         ['offset', 'offset-sm', 'offset-md', 'offset-lg', 'offset-xl'])) {
@@ -240,10 +229,10 @@ class BootstrapLayoutClassesWidget extends WidgetBase {
         '#header' => [
           $this->t('Option'),
           $this->t('Standard'),
-          '≥ 576px',
-          '≥ 768px',
-          '≥ 992px',
-          '≥ 1200px',
+          'Small',
+          'Medium',
+          'Large',
+          'Extra Large',
         ],
       ];
     }
@@ -266,7 +255,7 @@ class BootstrapLayoutClassesWidget extends WidgetBase {
         ['mt', 'ml', 'mr', 'mb'])) {
       $element['margin'] = [
         '#type' => 'fieldset',
-        '#title' => $this->t('Outer'),
+        '#title' => $this->t('Margin'),
         '#attributes' => ['class' => ['container-inline', 'dpad']],
       ];
       // Consider maybe shorter labels of "↓)", "→)", "←)", "↑)".
@@ -300,7 +289,7 @@ class BootstrapLayoutClassesWidget extends WidgetBase {
         ['pt', 'pl', 'pr', 'pb'])) {
       $element['padding'] = [
         '#type' => 'fieldset',
-        '#title' => $this->t('Inner'),
+        '#title' => $this->t('Padding'),
         '#attributes' => ['class' => ['container-inline', 'dpad']],
       ];
       $element['padding']['pt'] = [
@@ -334,10 +323,11 @@ class BootstrapLayoutClassesWidget extends WidgetBase {
         || $this->getSetting('align-self')
         || $this->getSetting('justify-content')
         || $this->getSetting('gutter')
+        || $this->getSetting('text')
         || $this->getSetting('custom')
         || self::hasAny($values, [
           'container', 'align-items', 'align-self',
-          'justify-content', 'gx', 'custom',
+          'justify-content', 'gx', 'text', 'custom',
         ])) {
       $element['general'] = [
         '#type' => 'fieldset',
@@ -350,6 +340,14 @@ class BootstrapLayoutClassesWidget extends WidgetBase {
           '#title' => 'Container',
           '#options' => $options_container,
           '#default_value' => $values['container'],
+        ];
+      }
+      if ($this->getSetting('text') || self::hasAny($values, ['text'])) {
+        $element['general']['text'] = [
+          '#type' => 'select',
+          '#title' => 'Background',
+          '#options' => $options_text,
+          '#default_value' => $values['text'],
         ];
       }
       if ($this->getSetting('align-items') || self::hasAny($values, ['align-items'])) {
@@ -414,6 +412,7 @@ class BootstrapLayoutClassesWidget extends WidgetBase {
         $value['layout']['offset'] ?? [],
         $value['layout']['order'] ?? [],
         $value['margin'] ?? [],
+        $value['text'] ?? [],
         $value['padding'] ?? [],
         $value['general'] ?? []);
 
@@ -518,6 +517,7 @@ class BootstrapLayoutClassesWidget extends WidgetBase {
       'order-md' => '',
       'order-lg' => '',
       'order-xl' => '',
+      'text' => '',
       'align-items' => '',
       'align-self' => '',
       'justify-content' => '',
