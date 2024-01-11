@@ -14,6 +14,9 @@ field.widget.settings.bootstrap_layout_classes_widget:
     col:
       type: boolean
       label: 'Columns'
+    text:
+      type: boolean
+      label: 'Background'
     offset:
       type: boolean
       label: 'Offset'
