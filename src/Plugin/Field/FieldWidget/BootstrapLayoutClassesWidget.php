@@ -572,6 +572,13 @@ class BootstrapLayoutClassesWidget extends WidgetBase {
           // Store the class.
           $items['container'] = $class;
         }
+        elseif ($key == 'text--bg') {
+          if ($val == 'dark') {
+            $items['text'] = "-bg-dark";
+          } elseif($val == 'light') {
+            $items['text'] = "-bg-light";
+          }
+        }
         elseif (isset($items[$key])) {
           // Store only the value.
           $items[$key] = $val;
