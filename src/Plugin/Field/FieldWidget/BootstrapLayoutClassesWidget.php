@@ -196,8 +196,8 @@ class BootstrapLayoutClassesWidget extends WidgetBase {
 
     $options_text = [
       '' => $this->t(''),
-      '-bg-dark' => $this->t('Dark'),
-      '-bg-light' => $this->t('Light'),
+      'bg-dark' => $this->t('Dark'),
+      'bg-light' => $this->t('Light'),
     ];
 
     $breakpoints = [
