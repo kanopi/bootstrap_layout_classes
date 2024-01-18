@@ -137,9 +137,9 @@ class BootstrapLayoutClassesWidget extends WidgetBase {
     $values = self::split($value);
 
     $options_container = [
-      '' => '',
       'container' => 'Container',
       'container-fluid' => 'Fluid',
+      '' => '',
     ];
     // '#empty_option' => '--',
     $options_width = [
@@ -501,7 +501,7 @@ class BootstrapLayoutClassesWidget extends WidgetBase {
    */
   protected static function defaultItems() {
     return [
-      'container' => '',
+      'container' => 'Container',
       'col' => '',
       'col-sm' => '',
       'col-md' => '',
@@ -572,11 +572,11 @@ class BootstrapLayoutClassesWidget extends WidgetBase {
           // Store the class.
           $items['container'] = $class;
         }
-        elseif ($key == 'text--bg') {
+        elseif ($key == 'text-bg') {
           if ($val == 'dark') {
-            $items['text'] = "-bg-dark";
+            $items['text'] = "bg-dark";
           } elseif($val == 'light') {
-            $items['text'] = "-bg-light";
+            $items['text'] = "bg-light";
           }
         }
         elseif (isset($items[$key])) {
