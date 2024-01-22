@@ -139,7 +139,6 @@ class BootstrapLayoutClassesWidget extends WidgetBase {
     $options_container = [
       'container' => 'Container',
       'container-fluid' => 'Fluid',
-      '' => '',
     ];
     // '#empty_option' => '--',
     $options_width = [
