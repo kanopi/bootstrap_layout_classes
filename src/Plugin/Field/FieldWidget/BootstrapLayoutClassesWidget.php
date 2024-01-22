@@ -210,15 +210,15 @@ class BootstrapLayoutClassesWidget extends WidgetBase {
     $selects = [];
     if ($this->getSetting('col') || self::hasAny($values,
         ['col', 'col-sm', 'col-md', 'col-lg', 'col-xl'])) {
-      $selects['col'] = [$this->t('Width'), $options_width];
+      $selects['col'] = [$this->t('Container Width'), $options_width];
     }
     if ($this->getSetting('offset') || self::hasAny($values,
         ['offset', 'offset-sm', 'offset-md', 'offset-lg', 'offset-xl'])) {
-      $selects['offset'] = [$this->t('Offset'), $options_offset];
+      $selects['offset'] = [$this->t('Container Offset'), $options_offset];
     }
     if ($this->getSetting('order') || self::hasAny($values,
         ['order', 'order-sm', 'order-md', 'order-lg', 'order-xl'])) {
-      $selects['order'] = [$this->t('Order'), $options_order];
+      $selects['order'] = [$this->t('Container Order'), $options_order];
     }
 
     if (!empty($selects)) {
@@ -227,11 +227,11 @@ class BootstrapLayoutClassesWidget extends WidgetBase {
         // '#caption' => t('Layout Options'),
         '#header' => [
           $this->t('Option'),
-          $this->t('Standard'),
-          'Small',
-          'Medium',
-          'Large',
-          'Extra Large',
+          $this->t('Base/Default'),
+          'Small ≥576px',
+          'Medium ≥768px',
+          'Large ≥992px',
+          'Extra Large ≥1200px',
         ],
       ];
     }
