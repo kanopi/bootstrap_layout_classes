@@ -536,7 +536,7 @@ class BootstrapLayoutClassesWidget extends WidgetBase {
   /**
    * Split text into layout key/values.
    */
-  protected static function split($value) {
+  public static function split($value) {
     // Defaults.
     $items = self::defaultItems();
     $custom = [];
