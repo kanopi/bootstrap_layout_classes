@@ -2,6 +2,7 @@
 
 namespace Drupal\bootstrap_layout_classes\Plugin\Field\FieldFormatter;
 
+use Drupal\bootstrap_layout_classes\Plugin\Field\FieldWidget\BootstrapLayoutClassesWidget;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 
@@ -34,8 +35,9 @@ class BootstrapLayoutClassesFormatter extends FormatterBase {
       // dpm(get_class($item));
       // dpm($item->getString());
       // dpm($item->getValue());
-      $classArray[] = str_replace('_', '-', $item->getString());
+            $classArray[] = str_replace('_', '-', $item->getString());
     }
+
 
     // $element['#css_class_source'] = $classArraySource;
     $element['#css_class'] = $classArray;

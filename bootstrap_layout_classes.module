@@ -66,7 +66,7 @@ function bootstrap_layout_classes_entity_view_alter(array &$build, EntityInterfa
 
       // Special handling for paragraphs
       if ($entity->getEntityTypeId() == 'paragraph') {
-        $build['#theme'] = 'bootstrap_layout_classes';
+        $build['#theme'] = 'paragraph__default';
         $build['#paragraph'] = $entity;
         $build['#bootstrap_styles'] = BootstrapLayoutClassesWidget::split($field->first()->getValue()['value']);
         $build['#view_mode'] = $build['#view_mode'] ?? '';
@@ -94,7 +94,7 @@ function bootstrap_layout_classes_entity_view_alter(array &$build, EntityInterfa
  */
 function bootstrap_layout_classes_theme($existing, $type, $theme, $path) {
   return [
-    'bootstrap_layout_classes' => [
+    'paragraph__default' => [
       'variables' => [
         'paragraph' => NULL,
         'content' => [],
@@ -104,7 +104,7 @@ function bootstrap_layout_classes_theme($existing, $type, $theme, $path) {
         'is_admin' => FALSE,
         'bootstrap_styles' => NULL,
       ],
-      'template' => 'bootstrap_layout_classes',
+      'template' => 'paragraph--default',
     ],
   ];
 }
