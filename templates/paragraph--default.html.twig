@@ -1,0 +1,91 @@
+{#
+@file
+Default theme implementation to display a paragraph with Bootstrap styles.
+
+Variables available:
+- paragraph: The paragraph entity.
+- content: Render array of paragraph items.
+- attributes: HTML attributes for the containing element.
+- view_mode: The view mode (e.g., "full", "teaser").
+- logged_in: True if the user is logged in.
+- is_admin: True if the user is an administrator.
+- bootstrap_styles: Array of style configurations for Bootstrap classes.
+#}
+{% import _self as macros %}
+
+{# Set default entity styles #}
+{%
+  set classes = [
+  'paragraph',
+  'paragraph--type--' ~ paragraph.bundle|clean_class,
+  view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
+  not paragraph.isPublished() ? 'paragraph--unpublished'
+]
+%}
+
+{# Macro for generating class strings based on Bootstrap style configurations #}
+{% macro generate_class(value, prefix) %}
+  {{- value ? (prefix ~ value) : '' -}}
+{% endmacro %}
+
+{# Define the mapping of Bootstrap classes to their prefixes #}
+{% set bootstrap_classes = {
+  'container': '',
+  'col': 'col-',
+  'col-sm': 'col-sm-',
+  'col-md': 'col-md-',
+  'col-lg': 'col-lg-',
+  'col-xl': 'col-xl-',
+  'custom': '',
+  'offset': 'offset-',
+  'offset-sm': 'offset-sm-',
+  'offset-md': 'offset-md-',
+  'offset-lg': 'offset-lg-',
+  'offset-xl': 'offset-xl-',
+  'mt': 'mt-',
+  'mb': 'mb-',
+  'ml': 'ml-',
+  'mr': 'mr-',
+  'pt': 'pt-',
+  'pb': 'pb-',
+  'pl': 'pl-',
+  'pr': 'pr-',
+  'gx': 'gx-',
+  'gy': 'gy-',
+  'my': 'my-',
+  'mx': 'mx-',
+  'py': 'py-',
+  'px': 'px-',
+  'text': 'text-',
+  'justify-content': 'justify-content-',
+  } %}
+
+  {# Initialize class arrays for each div level #}
+  {% set container_classes = [] %}
+  {% set row_classes = ['row'] %}
+  {% set column_classes = [] %}
+
+  {% for key, prefix in bootstrap_classes %}
+    {% set class = macros.generate_class(bootstrap_styles[key], prefix) %}
+    {% if class %}
+      {% if key in ['container', 'mt', 'mb', 'ml', 'mr', 'pt', 'pb', 'pl', 'pr', 'text', 'custom'] %}
+        {% set container_classes = container_classes|merge([class]) %}
+      {% elseif key in ['gx', 'gy', 'align-items', 'align-self', 'justify-content'] %}
+        {% set row_classes = row_classes|merge([class]) %}
+      {% else %}
+        {% set column_classes = column_classes|merge([class]) %}
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+
+{% block paragraph %}
+  <div class="{{ classes | join(' ') }}{{ container_classes|join(' ') }}">
+    <div class="{{ row_classes|join(' ') }}">
+      <div class="{{ column_classes|join(' ') }}">
+        {% block content %}
+          {{ content }}
+        {% endblock content %}
+      </div>
+    </div>
+  </div>
+{% endblock paragraph %}

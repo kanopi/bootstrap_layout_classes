@@ -35,9 +35,6 @@ class BootstrapLayoutClassesWidget extends WidgetBase {
       'margin' => TRUE,
       'text' => FALSE,
       'padding' => TRUE,
-      'gutter' => TRUE,
-      'align-items' => FALSE,
-      'align-self' => FALSE,
       'justify-content' => FALSE,
       'custom' => FALSE,
     ] + parent::defaultSettings();
@@ -71,13 +68,9 @@ class BootstrapLayoutClassesWidget extends WidgetBase {
     'container' => 'Container',
     'col' => 'Columns',
     'offset' => 'Offset',
-    'order' => 'Order',
     'margin' => 'Margin',
     'text' => 'Background',
     'padding' => 'Padding',
-    'gutter' => 'Gutters',
-    'align-items' => 'Align Items',
-    'align-self' => 'Align Self',
     'justify-content' => 'Justify Content',
     'custom' => 'Custom Classes',
   ];
@@ -139,7 +132,6 @@ class BootstrapLayoutClassesWidget extends WidgetBase {
     $options_container = [
       'container' => 'Container',
       'container-fluid' => 'Fluid',
-      '' => '',
     ];
     // '#empty_option' => '--',
     $options_width = [
@@ -157,23 +149,6 @@ class BootstrapLayoutClassesWidget extends WidgetBase {
       '6' => '50%',
       '9' => '75%',
       '12' => '100%',
-    ];
-    $options_order = [
-      '' => 'Auto',
-      'first' => 'First',
-      '1' => '1',
-      '2' => '2',
-      '3' => '3',
-      '4' => '4',
-      '5' => '5',
-      '6' => '6',
-      '7' => '7',
-      '8' => '8',
-      '9' => '9',
-      '10' => '10',
-      '11' => '11',
-      '12' => '12',
-      'last' => $this->t('Last'),
     ];
 
     $options_spacing = [
@@ -216,10 +191,6 @@ class BootstrapLayoutClassesWidget extends WidgetBase {
     if ($this->getSetting('offset') || self::hasAny($values,
         ['offset', 'offset-sm', 'offset-md', 'offset-lg', 'offset-xl'])) {
       $selects['offset'] = [$this->t('Offset'), $options_offset];
-    }
-    if ($this->getSetting('order') || self::hasAny($values,
-        ['order', 'order-sm', 'order-md', 'order-lg', 'order-xl'])) {
-      $selects['order'] = [$this->t('Order'), $options_order];
     }
 
     if (!empty($selects)) {
@@ -319,15 +290,12 @@ class BootstrapLayoutClassesWidget extends WidgetBase {
     }
 
     if ($this->getSetting('container')
-        || $this->getSetting('align-items')
-        || $this->getSetting('align-self')
         || $this->getSetting('justify-content')
         || $this->getSetting('gutter')
         || $this->getSetting('text')
         || $this->getSetting('custom')
         || self::hasAny($values, [
-          'container', 'align-items', 'align-self',
-          'justify-content', 'gx', 'text', 'custom',
+          'container','justify-content', 'gx', 'text', 'custom',
         ])) {
       $element['general'] = [
         '#type' => 'fieldset',
@@ -350,36 +318,12 @@ class BootstrapLayoutClassesWidget extends WidgetBase {
           '#default_value' => $values['text'],
         ];
       }
-      if ($this->getSetting('align-items') || self::hasAny($values, ['align-items'])) {
-        $element['general']['align-items'] = [
-          '#type' => 'select',
-          '#title' => $this->getSetting('usage') == 1 ? $this->t('Vertical') : $this->t('Horizontal'),
-          '#options' => $options_align,
-          '#default_value' => $values['align-items'],
-        ];
-      }
-      if ($this->getSetting('align-self') || self::hasAny($values, ['align-self'])) {
-        $element['general']['align-self'] = [
-          '#type' => 'select',
-          '#title' => $this->t('Vertical'),
-          '#options' => $options_align,
-          '#default_value' => $values['align-self'],
-        ];
-      }
       if ($this->getSetting('justify-content') || self::hasAny($values, ['justify-content'])) {
         $element['general']['justify-content'] = [
           '#type' => 'select',
-          '#title' => $this->getSetting('usage') == 1 ? $this->t('Horizontal') : $this->t('Vertical'),
+          '#title' => $this->getSetting('usage') == 1 ? $this->t('Horizontal') : $this->t('Align'),
           '#options' => $options_align,
           '#default_value' => $values['justify-content'],
-        ];
-      }
-      if ($this->getSetting('gutter') || self::hasAny($values, ['gutter'])) {
-        $element['general']['gx'] = [
-          '#type' => 'select',
-          '#title' => $this->t('Gutter'),
-          '#options' => $options_spacing,
-          '#default_value' => $values['gx'],
         ];
       }
       if ($this->getSetting('custom') || self::hasAny($values, ['custom'])) {
@@ -410,7 +354,6 @@ class BootstrapLayoutClassesWidget extends WidgetBase {
       $items = array_merge(self::defaultItems(),
         $value['layout']['col'] ?? [],
         $value['layout']['offset'] ?? [],
-        $value['layout']['order'] ?? [],
         $value['margin'] ?? [],
         $value['text'] ?? [],
         $value['padding'] ?? [],
@@ -512,14 +455,7 @@ class BootstrapLayoutClassesWidget extends WidgetBase {
       'offset-md' => '',
       'offset-lg' => '',
       'offset-xl' => '',
-      'order' => '',
-      'order-sm' => '',
-      'order-md' => '',
-      'order-lg' => '',
-      'order-xl' => '',
       'text' => '',
-      'align-items' => '',
-      'align-self' => '',
       'justify-content' => '',
       'mt' => '',
       'mb' => '',
@@ -536,7 +472,7 @@ class BootstrapLayoutClassesWidget extends WidgetBase {
   /**
    * Split text into layout key/values.
    */
-  protected static function split($value) {
+  public static function split($value) {
     // Defaults.
     $items = self::defaultItems();
     $custom = [];

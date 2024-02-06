@@ -5,6 +5,7 @@
  * Entity Class Formatter module.
  */
 
+use Drupal\bootstrap_layout_classes\Plugin\Field\FieldWidget\BootstrapLayoutClassesWidget;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
@@ -62,9 +63,50 @@ function bootstrap_layout_classes_entity_view_alter(array &$build, EntityInterfa
 
     // Apply settings of every field instance.
     foreach ($settings_set as $settings) {
+
+      // Special handling for paragraphs
+      if ($entity->getEntityTypeId() == 'paragraph') {
+        $build['#theme'] = 'paragraph__default';
+        $build['#paragraph'] = $entity;
+        $build['#bootstrap_styles'] = BootstrapLayoutClassesWidget::split($field->first()->getValue()['value']);
+        $build['#view_mode'] = $build['#view_mode'] ?? '';
+        $build['#logged_in'] = \Drupal::currentUser()->isAuthenticated();
+        $build['#is_admin'] = \Drupal::currentUser()->hasPermission('administer site configuration');
+
+        // Move fields into the content array, if not already structured that way.
+        if (!isset($build['#content'])) {
+          $build['#content'] = [];
+          foreach ($build as $key => $value) {
+            if (is_array($value) && (isset($value['#theme']) || isset($value['#type']))) {
+              $build['#content'][$key] = $value;
+              unset($build[$key]);
+            }
+          }
+        }
+      }
       _bootstrap_layout_classes_apply($build, $field, $settings);
     }
   }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function bootstrap_layout_classes_theme($existing, $type, $theme, $path) {
+  return [
+    'paragraph__default' => [
+      'variables' => [
+        'paragraph' => NULL,
+        'content' => [],
+        'attributes' => NULL,
+        'view_mode' => '',
+        'logged_in' => FALSE,
+        'is_admin' => FALSE,
+        'bootstrap_styles' => NULL,
+      ],
+      'template' => 'paragraph--default',
+    ],
+  ];
 }
 
 /**
